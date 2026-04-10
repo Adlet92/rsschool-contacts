@@ -890,3 +890,260 @@ div {
   height: 100vh; /* full screen height */
 }
 ```
+
+Tasks
+
+Easy Level
+1. Sum of Array Elements
+Write a function that takes an array of numbers and returns their sum.
+Example: sumArray([1, 2, 3, 4]) → 10
+
+Solution 1 — Basic loop (baseline)
+```
+function sumArray(arr) {
+  let sum = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
+
+  return sum;
+}
+```
+Solution 2 — for...of
+
+```
+function sumArray(arr) {
+  let sum = 0;
+
+  for (const num of arr) {
+    sum += num;
+  }
+
+  return sum;
+}
+```
+
+Solution 3 — reduce (senior-level expectation)
+```
+function sumArray(arr) {
+  return arr.reduce((acc, curr) => acc + curr, 0);
+}
+```
+
+2. Reverse a String (NO reverse())
+
+Write a function that reverses a string without using built-in reverse method.
+Example: reverseString("hello") → "olleh"
+
+Solution 1 — Loop (classic)
+```
+function reverseString(str) {
+  let result = "";
+
+  for (let i = str.length - 1; i >= 0; i--) {
+    result += str[i];
+  }
+
+  return result;
+}
+```
+
+Solution 2 — Two pointers (strong signal)
+```
+function reverseString(str) {
+  const arr = str.split("");
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left < right) {
+    [arr[left], arr[right]] = [arr[right], arr[left]];
+    left++;
+    right--;
+  }
+
+  return arr.join("");
+}
+```
+Solution 3 — Recursion
+```
+function reverseString(str) {
+  if (str === "") return "";
+  return reverseString(str.slice(1)) + str[0];
+}
+```
+3. Find Maximum Number
+
+Write a function that finds the largest number in an array without using Math.max.
+Example: findMax([3, 7, 2, 9, 1]) → 9
+
+Solution 1 — Loop
+```
+function findMax(arr) {
+  let max = arr[0];
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+
+  return max;
+}
+```
+Solution 2 — for...of
+```
+function findMax(arr) {
+  let max = -Infinity;
+
+  for (const num of arr) {
+    if (num > max) max = num;
+  }
+
+  return max;
+}
+```
+Solution 3 — reduce
+```
+function findMax(arr) {
+  return arr.reduce((max, curr) => (curr > max ? curr : max), -Infinity);
+}
+```
+
+4. Count Vowels
+
+Write a function that counts the number of vowels (a, e, i, o, u) in a string.
+Example: countVowels("hello world") → 3
+
+Solution 1 — Loop + includes
+```
+function countVowels(str) {
+  const vowels = "aeiou";
+  let count = 0;
+
+  for (const char of str.toLowerCase()) {
+    if (vowels.includes(char)) {
+      count++;
+    }
+  }
+
+  return count;
+}
+```
+
+Solution 2 — Set (more optimal lookup)
+```
+function countVowels(str) {
+  const vowels = new Set(["a", "e", "i", "o", "u"]);
+  let count = 0;
+
+  for (const char of str.toLowerCase()) {
+    if (vowels.has(char)) count++;
+  }
+
+  return count;
+}
+```
+Solution 3 — Regex
+```
+function countVowels(str) {
+  const matches = str.match(/[aeiou]/gi);
+  return matches ? matches.length : 0;
+}
+```
+
+**Medium tasks**
+6. Remove Duplicates
+
+Write a function that removes duplicate values from an array.
+Example: removeDuplicates([1, 2, 2, 3, 4, 4, 5]) → [1, 2, 3, 4, 5]
+
+Solution 1 — Set (most expected)
+```
+function removeDuplicates(arr) {
+  return [...new Set(arr)];
+}
+```
+Solution 2 — filter + indexOf
+```
+function removeDuplicates(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) === index);
+}
+```
+Solution 3 — reduce
+```
+function removeDuplicates(arr) {
+  return arr.reduce((acc, curr) => {
+    if (!acc.includes(curr)) acc.push(curr);
+    return acc;
+  }, []);
+}
+```
+9. Object Property Counter
+
+Write a function that counts how many times each element appears in an array and returns an object.
+Example: countOccurrences(['a', 'b', 'a', 'c', 'b', 'a']) → {a: 3, b: 2, c: 1}
+
+Solution 1 — Basic object
+```
+function countOccurrences(arr) {
+  const result = {};
+
+  for (const item of arr) {
+    result[item] = (result[item] || 0) + 1;
+  }
+
+  return result;
+}
+```
+Solution 2 — reduce
+```
+function countOccurrences(arr) {
+  return arr.reduce((acc, curr) => {
+    acc[curr] = (acc[curr] || 0) + 1;
+    return acc;
+  }, {});
+}
+```
+Solution 3 — Map (better for non-strings)
+```
+function countOccurrences(arr) {
+  const map = new Map();
+
+  for (const item of arr) {
+    map.set(item, (map.get(item) || 0) + 1);
+  }
+
+  return Object.fromEntries(map);
+}
+```
+10. Capitalize Words
+
+Write a function that capitalizes the first letter of each word in a sentence.
+Example: capitalizeWords("hello world from javascript") → "Hello World From Javascript"
+
+Solution 1 — Split/map/join
+```
+function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
+}
+```
+Solution 2 — Safe version
+```
+function capitalizeWords(str) {
+  return str
+    .trim()
+    .split(/\s+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+```
+Solution 3 — Regex
+```
+function capitalizeWords(str) {
+  return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+```
