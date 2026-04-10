@@ -258,3 +258,65 @@ let greeting = "say Hi";
     console.log(greeting); // "say Hi"
 ```
 Why is there no error? This is because both instances are treated as different variables since they have different scopes.
+This fact makes let a better choice than var. Since a variable cannot be declared more than once within a scope, then the problem discussed earlier that occurs with var does not happen.
+
+**Hoisting of let**
+
+Just like var, let declarations are hoisted to the top. Unlike var which is initialized as undefined, the let keyword is not initialized. So if you try to use a let variable before declaration, you'll get a Reference Error.
+
+**Const**
+
+Variables declared with the **const** maintain constant values. const declarations share some similarities with let declarations.
+
+**const declarations are block scoped**
+
+Like let declarations, const declarations can only be accessed within the block they were declared.
+
+**const cannot be updated or re-declared**
+
+This behavior is somehow different when it comes to objects declared with const. While a const object cannot be updated, the properties of this objects can be updated. Therefore, if we declare a const object as this:
+```
+const greeting = {
+        message: "say Hi",
+        times: 4
+    }
+```
+we can do this:
+```
+greeting.message = "say Hello instead";
+```
+**Hoisting of const**
+
+Just like let, const declarations are hoisted to the top but are not initialized.
+
+
+**Loops**
+
+Loops offer a quick and easy way to do something repeatedly.
+
+```
+for (let step = 0; step < 5; step++) {
+  // Runs 5 times, with values of step 0 through 4.
+  console.log("Walking east one step");
+}
+```
+There are many different kinds of loops, but they all essentially do the same thing: they repeat an action some number of times.
+
+The various loop mechanisms offer different ways to determine the start and end points of the loop. There are various situations that are more easily served by one type of loop over the others.
+
+**for statement**
+
+A for loop repeats until a specified condition evaluates to false.
+```
+for (initialization; condition; afterthought)
+  statement
+```
+**do...while statement**
+
+The do...while statement repeats until a specified condition evaluates to false.
+```
+do
+  statement
+while (condition);
+```
+
