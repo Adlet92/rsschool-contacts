@@ -647,6 +647,119 @@ Console.log(sum) // 10
 Sets are used to store collections of unique value without allowing duplication. The set is similar to the array and supports both insertion and deletion methods of the array. Sets are faster than arrays in terms of searching as they use a hash table internally for storing data and can be used to replace duplicates from other data types.
 
 
+**Objects**
+
+In JavaScript, objects are key-value collections.
+The most common way of creating and object.
+```
+const user = {
+  name: "John",
+  age: 30
+};
+```
+You can also create objects dynamically and assign properties later, which is useful when building objects step by step.
+```
+const user = {};
+user.name = "John";
+```
+**Getting Keys, Values, Entries**
+
+To iterate over objects, I usually rely on built-in methods.
+```
+Object.keys(user);   // ["name", "age"]
+Object.values(user); // ["John", 30]
+Object.entries(user); // [["name", "John"], ["age", 30]]
+```
+I especially like Object.entries because it works nicely with destructuring in loops.
+```
+for (const [key, value] of Object.entries(user)) {
+  console.log(key, value);
+}
+```
+**Shallow vs Deep Copy**
+
+**Shallow Copy**
+
+I can create a shallow copy using spread syntax.
+```
+const copy = { ...user };
+```
+
+**Deep Copy**
+
+For deep copying, one quick solution is JSON serialization.
+```
+JSON.parse(JSON.stringify(user));
+```
+But it has limitations — it removes functions, undefined, and breaks special objects like Date or Map.
+
+A better modern solution is structuredClone.
+```
+const copy = structuredClone(user);
+```
+
+**Destructuring**
+
+I use destructuring a lot to extract values from objects.
+
+```
+const { name, age } = user;
+```
+I can also rename variables or set default values.
+```
+const { name: userName, country = "USA" } = user;
+```
+**Object.freeze and Object.seal**
+
+These are used to control mutability.
+
+- Object.freeze makes the object completely immutable
+- Object.seal allows modifying existing properties but prevents adding or removing them
+
+```
+const user = Object.freeze({ name: "John" });
+user.name = "Mike"; // ignored
+```
+
+**Getter and Setter**
+
+I use getters and setters when I want computed or controlled access to properties.
+```
+const user = {
+  firstName: "John",
+  lastName: "Doe",
+
+  get fullName() {
+    return this.firstName + " " + this.lastName;
+  },
+
+  set fullName(value) {
+    [this.firstName, this.lastName] = value.split(" ");
+  }
+};
+```
+
+**Object vs Map**
+
+Objects used for simple key-value storage with string keys.
+But when I need more flexibility, I use Map.
+
+```
+const map = new Map();
+map.set("name", "John");
+```
+Key differences:
+
+- Objects only allow string or symbol keys
+- Maps allow any type as keys
+- Maps preserve insertion order
+- Maps are better for frequent additions/removals
+
+```
+obj[1] === obj["1"]; // true
+```
+Objects convert keys to strings, which can cause issues.
+
 **HTML/CSS Basics**
 
 **Selectors**
