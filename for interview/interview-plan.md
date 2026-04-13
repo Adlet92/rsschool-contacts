@@ -760,6 +760,195 @@ obj[1] === obj["1"]; // true
 ```
 Objects convert keys to strings, which can cause issues.
 
+
+**Functions**
+
+**Declaration vs Expression vs Arrow functions**
+
+```
+//functional declaration
+
+function sum(a, b) {
+  return a + b;
+}
+```
+
+```
+//functional expression
+
+const sum = function(a, b) {
+  return a + b;
+};
+```
+
+```
+//Arrow Function
+
+const sum = (a, b) => a + b;
+```
+However, arrow functions don’t have their own this, which is an important difference.
+
+**Default Parameters**
+
+To define default values for function parameters.
+```
+function greet(name = "Guest") {
+  return `Hello, ${name}`;
+}
+```
+If no argument is passed, the default is used.
+
+**Classes**
+
+A class in JavaScript is like a template or blueprint for creating objects.
+It helps us create multiple objects with the same structure and behavior, instead of writing the same code again and again.
+
+**Constructor**
+
+The constructor is a special method used to initialize new instances of a class.
+
+```
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+const user = new User("John", 30);
+```
+**Public vs Private Fields and Methods**
+
+By default, class fields and methods are public.
+```
+class User {
+  name = "John";
+
+  sayHi() {
+    console.log(this.name);
+  }
+}
+```
+
+JavaScript also supports private fields using the # syntax.
+```
+class User {
+  #password;
+
+  constructor(password) {
+    this.#password = password;
+  }
+
+  checkPassword(value) {
+    return this.#password === value;
+  }
+}
+```
+These fields are truly private — they cannot be accessed outside the class.
+
+```
+user.#password; // ❌ Syntax error
+```
+
+**Static Methods & Properties**
+
+Static methods and properties belong to the class itself, not to individual objects created from that class.
+
+```
+class MathUtils {
+  static PI = 3.14;
+
+  static add(a, b) {
+    return a + b;
+  }
+}
+
+console.log(MathUtils.PI);      // 3.14
+console.log(MathUtils.add(2,3)); // 5
+```
+
+**Inheritance**
+
+Classes can inherit from other classes using extends.
+Inheritance allows one class to reuse properties and methods from another class.
+
+```
+class Animal {
+  speak() {
+    console.log("Animal makes a sound");
+  }
+}
+
+class Dog extends Animal {
+  bark() {
+    console.log("Woof");
+  }
+}
+
+const dog = new Dog();
+dog.speak(); // inherited
+dog.bark();  // own method
+```
+
+**super** keyword
+
+super is used to access the parent class.
+
+```
+class Animal {
+  constructor(name) {
+    this.name = name;
+    this.createdAt = Date.now(); // shared logic
+  }
+
+  getInfo() {
+    return `Animal: ${this.name}`;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name); // reuse parent logic
+    this.breed = breed;
+  }
+
+  getInfo() {
+    return `${super.getInfo()}, Breed: ${this.breed}`;
+  }
+}
+
+const dog = new Dog("Rex", "Labrador");
+console.log(dog.getInfo());
+```
+
+**Getters and Setters**
+
+Getters and setters in classes allow us to control how properties are accessed and modified, while still using them like normal properties.
+
+```
+class User {
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  get fullName() {
+    return this.firstName + " " + this.lastName;
+  }
+
+  set fullName(value) {
+    const parts = value.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  }
+}
+
+const user = new User("John", "Doe");
+
+console.log(user.fullName); // getter
+user.fullName = "Jane Smith"; // setter
+```
+
 **HTML/CSS Basics**
 
 **Selectors**
@@ -1192,6 +1381,42 @@ function removeDuplicates(arr) {
   }, []);
 }
 ```
+8. Flatten Array
+
+Write a function that flattens a nested array one level deep.
+Example: flattenArray([1, [2, 3], [4, [5]]]) → [1, 2, 3, 4, [5]]
+
+Solution 1
+```
+function flattenArray(arr) {
+  return arr.flat(1);
+}
+```
+Solution 2
+```
+function flattenArray(arr) {
+  return arr.reduce((acc, curr) => {
+    return acc.concat(curr);
+  }, []);
+}
+```
+Solution 3
+```
+function flattenArray(arr) {
+  const result = [];
+
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      result.push(...item);
+    } else {
+      result.push(item);
+    }
+  }
+
+  return result;
+}
+```
+
 9. Object Property Counter
 
 Write a function that counts how many times each element appears in an array and returns an object.
@@ -1230,6 +1455,24 @@ function countOccurrences(arr) {
   return Object.fromEntries(map);
 }
 ```
+Solution 4 - for loop
+```
+function countOccurrences(arr) {
+  const result = {};
+
+  for (let i = 0; i < arr.length; i++) {
+    const value = arr[i];
+
+    if (result[value]) {
+      result[value] = result[value] + 1;
+    } else {
+      result[value] = 1;
+    }
+  }
+
+  return result;
+}
+```
 10. Capitalize Words
 
 Write a function that capitalizes the first letter of each word in a sentence.
@@ -1258,5 +1501,28 @@ Solution 3 — Regex
 ```
 function capitalizeWords(str) {
   return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+```
+Solution 4 - for loop
+```
+function capitalizeWords(str) {
+  let result = "";
+  let capitalizeNext = true;
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    if (char === " ") {
+      result += char;
+      capitalizeNext = true;
+    } else if (capitalizeNext) {
+      result += char.toUpperCase();
+      capitalizeNext = false;
+    } else {
+      result += char;
+    }
+  }
+
+  return result;
 }
 ```
