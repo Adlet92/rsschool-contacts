@@ -949,6 +949,110 @@ console.log(user.fullName); // getter
 user.fullName = "Jane Smith"; // setter
 ```
 
+**Client Side (Browser APIs)**
+
+**Global Object Window**
+
+The **document** object represents the HTML page. It allows us to read and manipulate the DOM.
+```
+document.getElementById("app");
+document.querySelector(".item");
+```
+We use it to:
+
+- select elements
+- change content
+- handle events
+
+```
+document.querySelector("button").addEventListener("click", () => {
+  console.log("Clicked");
+});
+```
+
+The **location** object can be used to get the current page address (URL) and to redirect the browser to a new page.
+
+```
+location.href = "https://example.com"; // redirect
+location.reload(); // reload page
+```
+
+**history** represents the session history stack of the current browser tab. We can think of it as a list of pages the user visited in this tab.
+
+Internally, the browser keeps something like:
+```
+["/home", "/products", "/product/1"]
+```
+And a pointer to current position:
+```
+          👇
+["/home", "/products", "/product/1"]
+```
+**history** is mainly used for client-side routing and navigation control without reloading the page.
+
+**navigator** gives information about the user’s environment — browser, device, capabilities — and also provides access to some system-level APIs.
+
+There are two main uses:
+
+- Information (what device/browser)
+- Capabilities (what the browser can do)
+
+I used it only for geolocation.
+
+
+On the client side, we have several ways to store data in the browser: **localStorage**, **sessionStorage**, and **cookies**. Each has different behavior, lifetime, and use cases.
+
+**localStorage** is used to store data in the browser persistently, meaning it stays even after the browser is closed.
+
+```
+localStorage.setItem("name", "John");
+localStorage.getItem("name"); // "John"
+localStorage.removeItem("name");
+localStorage.clear();
+```
+Key characteristics
+- Stores key-value pairs (strings only)
+- Persistent (no expiration)
+- Shared across tabs (same origin)
+- ~5MB storage limit
+- Synchronous API
+
+Real-world use cases
+- theme (dark/light)
+- user preferences
+- caching small data
+
+
+**sessionStorage** is similar to localStorage, but it is cleared when the tab is closed.
+
+Real-world use cases
+- form progress
+- temporary tokens
+- wizard steps
+
+
+**Cookies** are small pieces of data stored in the browser and automatically sent to the server with every HTTP request.
+
+```
+document.cookie = "username=John";
+```
+
+Setting with options
+```
+document.cookie = "token=abc; max-age=3600; path=/";
+```
+
+Key characteristics
+- Sent with every request (important!)
+- Small size (~4KB)
+- Can have expiration
+- Used for authentication/session
+
+
+I avoid storing sensitive data like JWT tokens in localStorage because it’s vulnerable to XSS attacks. Instead, I prefer HttpOnly cookies for authentication.
+
+**DOM Manipulation**
+
 **HTML/CSS Basics**
 
 **Selectors**
