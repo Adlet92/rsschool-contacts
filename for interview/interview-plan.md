@@ -1053,6 +1053,129 @@ I avoid storing sensitive data like JWT tokens in localStorage because it’s vu
 
 **DOM Manipulation**
 
+**getElementById**: This method retrieves an element by its unique ID attribute.
+```
+let element = document.getElementById("myElement");
+```
+getElementsByClassName: This method returns a collection of elements with the specified class name.
+```
+let elements = document.getElementsByClassName("myClass");
+```
+getElementsByTagName: This method returns a list of collection of elements with the specified tag name.
+```
+let elements = document.getElementsByTagName("div");
+```
+querySelector: This method retrieves the first element that matches a specified CSS selector.
+
+querySelectorAll: This method retrieves all elements that match a CSS selector.
+
+
+**Creating elements (createElement, createTextNode)**
+
+To create DOM elements dynamically we use createElement.
+```
+const div = document.createElement("div");
+```
+
+createElement creates an element, and createTextNode creates text content.
+```
+const text = document.createTextNode("Hello");
+div.appendChild(text);
+```
+
+**appendChild**
+
+```
+parent.appendChild(div);
+```
+- Adds as last child
+- Returns appended element
+
+**append**
+
+```
+parent.append(div);
+```
+Can accept:
+- multiple elements
+- strings
+
+```
+parent.append("Hello");       // ✅ works
+parent.appendChild("Hello");  // ❌ error
+```
+
+**insertBefore** allows me to insert a node before a specific child inside a parent element.
+
+```
+const parent = document.querySelector("ul");
+
+const newItem = document.createElement("li");
+newItem.textContent = "New item";
+
+const secondItem = parent.children[1];
+
+parent.insertBefore(newItem, secondItem);
+```
+before
+```
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+</ul>
+```
+after
+```
+<ul>
+  <li>Item 1</li>
+  <li>New item</li>
+  <li>Item 2</li>
+</ul>
+```
+
+**insertAdjacentHTML** allows me to insert HTML string directly into the DOM at a specific position, without recreating the entire element.
+
+syntax
+```
+element.insertAdjacentHTML(position, htmlString);
+```
+```
+element.insertAdjacentHTML("beforebegin", "<p>Hi</p>");
+```
+BEFORE the element itself
+```
+element.insertAdjacentHTML("afterbegin", "<p>Hi</p>");
+```
+FIRST child inside element
+
+```
+element.insertAdjacentHTML("beforeend", "<p>Hi</p>");
+```
+LAST child inside element
+
+```
+element.insertAdjacentHTML("afterend", "<p>Hi</p>");
+```
+AFTER the element
+
+**Visual example**
+```
+<div id="box">Content</div>
+```
+"beforebegin"
+```
+<p>Hi</p>
+<div id="box">Content</div>
+```
+"afterbegin"
+```
+<div id="box">
+  <p>Hi</p>
+  Content
+</div>
+```
+
+
 **HTML/CSS Basics**
 
 **Selectors**
