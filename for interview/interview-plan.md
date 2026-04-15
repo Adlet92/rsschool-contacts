@@ -949,6 +949,144 @@ console.log(user.fullName); // getter
 user.fullName = "Jane Smith"; // setter
 ```
 
+**Asynchronous JavaScript**
+
+**Callbacks**
+
+A callback is a function passed into another function to be executed later.
+
+```
+function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data loaded");
+  }, 1000);
+}
+
+fetchData((data) => {
+  console.log(data);
+});
+```
+The function doesn’t return immediately — instead, it calls the callback when the data is ready.
+
+**Promises**
+
+A Promise in JavaScript is an object that represents the result of an asynchronous operation, and it gives us a structured way to handle success and failure instead of using callbacks.
+
+Why Promises exist
+
+Before Promises, we used callbacks, which often led to deeply nested code.
+
+Promises solve:
+
+- readability
+- chaining
+- error handling
+
+
+States
+- pending: initial state
+- fulfilled: operation succeeded
+- rejected: operation failed
+
+A Promise can change state only once.
+
+```
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Success");
+    // reject("Error"); // ignored if resolve already called
+  }, 1000);
+});
+```
+
+**then, catch, finally**
+
+How Promises actually work:
+- “I will give you a result later”
+- You attach handlers (then, catch) to react when it's ready
+
+.then() — Success Handling
+
+.then() is used to handle the resolved (fulfilled) value of a Promise.
+
+```
+promise.then(result => {
+  console.log(result);
+});
+```
+.catch() — Error Handling
+
+.catch() handles rejected Promises or errors thrown in .then().
+```
+promise.catch(error => {
+  console.error(error);
+});
+```
+.finally() — Cleanup
+
+.finally() runs regardless of success or failure.
+```
+promise.finally(() => {
+  console.log("Always runs");
+});
+```
+then handles success, catch handles errors, and finally runs regardless of outcome.
+
+A Promise represents the result of an async operation and allows chaining via .then(), centralized error handling via .catch(), and cleanup via .finally(). It helps avoid callback hell and makes async code more readable and maintainable.
+
+**Promise Methods**
+
+```
+Promise.all([p1, p2, p3])
+  .then(results => console.log(results));
+```
+Behavior
+- waits for ALL promises
+- fails if ONE fails
+
+```
+Promise.all([
+  Promise.resolve(1),
+  Promise.reject("Error"),
+]);
+```
+rejects immediately
+
+**Promise.race**
+```
+Promise.race([p1, p2]);
+```
+returns first settled promise (resolve OR reject)
+
+**Promise.allSettled**
+```
+Promise.allSettled([p1, p2]);
+```
+- waits for all
+- returns results for each
+
+**Promise.any**
+```
+Promise.any([p1, p2]);
+```
+- resolves with FIRST successful promise
+- ignores failures (unless all fail)
+
+Method	Behavior
+
+all -	all must succeed
+
+race -	first settles
+
+allSettled -	wait for all
+
+any	- first success
+
+**async/await**
+
+async/await is syntactic helper over Promises — it doesn’t replace them, it just makes them easier to read and write.
+
+
 **Client Side (Browser APIs)**
 
 **Global Object Window**
