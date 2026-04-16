@@ -1558,6 +1558,202 @@ div {
 }
 ```
 
+**Layout**
+
+CSS layout is about how elements are sized and positioned on the page.
+
+**Box Model**
+
+Every element in CSS is a rectangular box made of content, padding, border, and margin.
+
+Properties
+- content → actual content
+- padding → space inside
+- border → edge
+- margin → space outside
+
+Use padding when you want to control space inside a component, and margin when you want to control spacing between components.
+
+**Display Property**
+
+block
+```
+display: block;
+```
+- takes full width
+- starts on new line
+
+inline
+```
+display: inline;
+```
+- does NOT start new line
+- width/height ignored
+
+inline-block
+```
+display: inline-block;
+```
+- inline behavior
+- BUT can set width/height
+
+none
+```
+display: none;
+```
+removed from layout
+
+display: none removes element from layout, unlike visibility: hidden which keeps space.
+
+**Position Property**
+
+static (default)
+```
+position: static;
+```
+- normal flow
+
+relative
+```
+position: relative;
+top: 10px;
+```
+- moves relative to itself
+- keeps original space
+
+absolute
+```
+position: absolute;
+top: 0;
+left: 0;
+```
+- positioned relative to nearest positioned ancestor
+
+fixed
+```
+position: fixed;
+```
+- fixed to viewport (doesn’t scroll)
+
+sticky
+```
+position: sticky;
+top: 0;
+```
+- behaves like relative → then sticks
+
+absolute looks for the nearest parent with position not static.
+
+**Flexbox**
+
+Flexbox is a one-dimensional layout system for arranging items in a row or column.
+
+```
+flex-grow: 1;
+```
+- takes extra space
+
+```
+flex-shrink: 1;
+```
+- shrinks when needed
+```
+flex-basis: 200px;
+```
+- initial size
+
+Flexbox is best for aligning items along one axis and handling dynamic spacing.
+
+**Grid**
+
+CSS Grid is a two-dimensional layout system for rows and columns.
+
+```
+.container {
+  display: grid;
+}
+
+grid-template-columns: 1fr 1fr 1fr;
+grid-template-rows: auto 200px;
+```
+```
+grid-area: 1 / 1 / 2 / 3;
+```
+row-start / col-start / row-end / col-end
+
+*auto-fill*
+
+```
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+```
+- creates as many columns as possible
+- keeps empty tracks
+
+*auto-fit*
+```
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+```
+- collapses empty columns
+- stretches items
+
+Key difference
+- auto-fill → keeps empty columns
+- auto-fit → stretches content
+
+Use Flexbox for alignment and small components, and Grid for full-page layouts or complex structures.
+
+**Responsive Design**
+
+Responsive design is the approach of building interfaces that adapt to different screen sizes and devices. It’s typically achieved using media queries, flexible layouts, and proper viewport configuration.
+
+**Media Queries**
+
+Media queries allow us to apply CSS conditionally based on screen size, resolution, or device characteristics.
+```
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+```
+This means: when screen width is 768px or less, apply these styles.
+
+*max-width*
+
+- applies BELOW 768px
+
+*min-width*
+
+- applies ABOVE 768px
+
+
+**Mobile-first vs Desktop-first**
+
+These are two strategies for writing responsive styles.
+
+Mobile-first
+- Start with mobile styles
+- Add styles for larger screens
+
+Desktop-first
+- Start with desktop
+- override for smaller screens
+
+**Viewport Meta Tag**
+
+The viewport meta tag controls how the page is scaled and displayed on mobile devices.
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+What it does
+- width=device-width → matches screen width
+- initial-scale=1 → no zoom by default
+
+Without it
+- Mobile browsers render page like desktop →
+- everything looks tiny
+
+
 Tasks
 
 Easy Level
